@@ -1,4 +1,4 @@
-class_name character_object extends database_object
+class_name character_object extends story_object
 ## Character Object
 ## Defines all data about our characters, extends database_object class so this can be stored in the database
 

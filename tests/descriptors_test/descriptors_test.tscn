@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://myomijgje3cd"]
+
+[ext_resource type="Script" path="res://tests/descriptors_test/descriptors_test.gd" id="1_jed1e"]
+
+[node name="descriptors_test" type="Node2D"]
+script = ExtResource("1_jed1e")

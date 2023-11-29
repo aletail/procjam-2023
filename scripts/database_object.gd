@@ -1,11 +1,11 @@
-class_name database_object extends Node2D
+class_name database_object
 ## Database Object
 ## Base class to add basic database support to child objects (Save, Load)
 ## All data defined by the data model will be stored in the database
 
 ## Data Model
 var data_model_values:Dictionary = Dictionary()
-var data_model_structure : Dictionary = Dictionary()
+var data_model_structure:Dictionary = Dictionary()
 
 ## Database
 var database_table_name:String
