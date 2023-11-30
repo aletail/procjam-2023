@@ -122,7 +122,7 @@ func _init():
 	
 ## Generate
 func generate(_gender:int, _race:int):
-	## Create some descriptors 
+	## Descriptors 
 	var hair_colors:Array = ["Red", "Orange", "Blond", "Brown", "Black"]
 	var eye_colors:Array = ["Blue", "Green", "Hazel", "Brown", "Yellow"]
 	var walk_motion:Array = ["Normal", "Swift", "Slow", "Deliberate"]
