@@ -28,4 +28,4 @@ func _init():
 	super()
 	
 	## Initialize Data Model Structure
-	data_model_structure["descriptor_string"] = {"data_type":"text", "not_null":true}
+	data_model_structure["descriptor_string"] = {"data_type":"text", "not_null":false}
