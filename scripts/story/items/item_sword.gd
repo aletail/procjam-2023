@@ -6,7 +6,7 @@ func generate():
 	randomize()
 
 	name = "Sword"
-	type = 0
+	type = Globals.ITEM_SWORD
 	
 	## Descriptors
 	var materials:Array = ["Wooden", "Steel"]

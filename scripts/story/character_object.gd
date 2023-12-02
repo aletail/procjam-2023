@@ -121,7 +121,7 @@ func _init():
 	data_model_structure["charisma"] = {"data_type":"int", "not_null":true}
 	
 ## Generate
-func generate(_gender:int, _race:int):
+func generate(_gender:int=0, _race:int=0):
 	## Descriptors 
 	var hair_colors:Array = ["Red", "Orange", "Blond", "Brown", "Black"]
 	var eye_colors:Array = ["Blue", "Green", "Hazel", "Brown", "Yellow"]
@@ -130,28 +130,37 @@ func generate(_gender:int, _race:int):
 	var rng = RandomNumberGenerator.new()
 	randomize()
 	
-	gender = _gender
-	race = _race
+	## If gender is 0, random select a gender
+	if _gender==0:
+		gender = Globals.choose(Globals.GENDER_LIST)
+	else:
+		gender = _gender	
+		
+	## If race is 0, random select a race
+	if _race==0:
+		race = Globals.choose(Globals.RACE_LIST)
+	else:
+		race = _race	
 	
 	## Roll base attribute stats
 	roll_attributes()
 	
 	## Determine names
-	if race==0:
+	if race==Globals.RACE_HUMAN:
 		## Get Human Names
 		set_human_names()
 		## Height
 		height = snapped(rng.randf_range(4.10, 6.4), 0.01)
 		## Weight
 		weight = rng.randi_range(114, 270)
-	elif race==1:
+	elif race==Globals.RACE_DWARF:
 		## Get Dwarf Names
 		set_dwarf_names()
 		## Height
 		height = snapped(rng.randf_range(4.2, 4.8), 0.01)
 		## Weight
 		weight = rng.randi_range(134, 226)
-	elif race==2:
+	elif race==Globals.RACE_ELF:
 		## Get Elf Names
 		set_elf_names()
 		## Height
@@ -168,15 +177,16 @@ func generate(_gender:int, _race:int):
 func set_human_names():
 	var db = SQLite.new()
 	db.path = "res://data/data"
-	db.verbosity_level = SQLite.QUIET
+	db.verbosity_level = SQLite.VERBOSE
+	db.read_only = true
 	db.open_db()
 	
 	## Select Random first name based on gender
 	var query_string = "SELECT Text FROM FirstName WHERE Gender = ? LIMIT 1 OFFSET ABS(RANDOM()) % MAX((SELECT COUNT(*) FROM FirstName WHERE Gender = ?), 1)"
 	var success = db.query_with_bindings(query_string, [gender, gender])
 	if success:
-		first_name = db.query_result[0]["Text"]
-		print(first_name)
+		first_name = db.query_result[0]["Text"].to_lower()
+		first_name = first_name[0].to_upper() + first_name.substr(1,-1)
 	else:
 		print("Error selecting first name")
 		
@@ -184,8 +194,8 @@ func set_human_names():
 	query_string = "SELECT Text FROM LastName LIMIT 1 OFFSET ABS(RANDOM()) % MAX((SELECT COUNT(*) FROM LastName), 1)"
 	success = db.query(query_string)
 	if success:
-		last_name = db.query_result[0]["Text"]
-		print(last_name)
+		last_name = db.query_result[0]["Text"].to_lower()
+		last_name = last_name[0].to_upper() + last_name.substr(1,-1)
 	else:
 		print("Error selecting last name")
 	
@@ -195,7 +205,8 @@ func set_human_names():
 func set_dwarf_names():
 	var db = SQLite.new()
 	db.path = "res://data/data"
-	db.verbosity_level = SQLite.QUIET
+	db.verbosity_level = SQLite.VERBOSE
+	db.read_only = true
 	db.open_db()
 	
 	## First Names
@@ -204,7 +215,6 @@ func set_dwarf_names():
 	var success = db.query_with_bindings(query_string, [gender, gender])
 	if success:
 		for first_name in db.query_result:
-			print(first_name["Text"])
 			fname_array.push_back(first_name["Text"])
 	else:
 		print("Error selecting first names")
@@ -227,7 +237,8 @@ func set_dwarf_names():
 func set_elf_names():
 	var db = SQLite.new()
 	db.path = "res://data/data"
-	db.verbosity_level = SQLite.QUIET
+	db.verbosity_level = SQLite.VERBOSE
+	db.read_only = true
 	db.open_db()
 	
 	## First Names
@@ -265,3 +276,6 @@ func roll_attributes():
 	intelligence = dice.roll(3, 6)
 	wisdom = dice.roll(3, 6)
 	charisma = dice.roll(3, 6)
+
+func get_full_name():
+	return first_name + " " + last_name

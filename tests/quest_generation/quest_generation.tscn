@@ -1,0 +1,67 @@
+[gd_scene load_steps=2 format=3 uid="uid://bhjgqf16ddcyj"]
+
+[ext_resource type="Script" path="res://tests/quest_generation/quest_generation.gd" id="1_0kpag"]
+
+[node name="quest_generation" type="Node2D"]
+script = ExtResource("1_0kpag")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="StoryVariation1" type="ScrollContainer" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 45.0
+offset_right = 560.0
+offset_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Text" type="RichTextLabel" parent="CanvasLayer/Control/StoryVariation1"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/line_separation = 5
+bbcode_enabled = true
+text = "The text will appear here..."
+
+[node name="StoryVariation2" type="ScrollContainer" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -556.0
+offset_top = 45.0
+offset_right = -6.0
+offset_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Text" type="RichTextLabel" parent="CanvasLayer/Control/StoryVariation2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/line_separation = 5
+bbcode_enabled = true
+text = "The text will appear here..."
+
+[node name="Button" type="Button" parent="CanvasLayer/Control"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 212.0
+offset_bottom = 41.0
+text = "Generate New Variations
+"

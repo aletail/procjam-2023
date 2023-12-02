@@ -10,7 +10,7 @@ func set_name(value):
 	data_model_values["name"] = value
 
 ## Type
-## 0 - Sword
+## See globals for types: res://scripts/globals.gd
 var type = 0: set = set_type, get = get_type
 func get_type():
 	return data_model_values["type"]

@@ -48,36 +48,37 @@ func NextName()->String:
 	var check = true
 	while(check):
 		var n = _rnd.randi_range(0, _samples.size()-1)
-		var nameLength = _samples[n].length()
-		s = _samples[n].substr(_rnd.randi_range(0, _samples[n].length() - _order), _order)
-		while(s.length() < nameLength):
-			var token = s.substr(s.length() - _order, _order)
-			var c = GetLetter(token)
-			if(c != '?'):
-				s += GetLetter(token)
-			else:
-				break
-		
-		if(s.contains(" ")):
-			var tokens = s.split(' ')
-			s = ""
-			for t in range(0, tokens.size(), 1):
-				if(tokens[t] == ""):
-					continue
-				if(tokens[t].length() == 1):
-					tokens[t] = tokens[t].to_upper();
+		if n > 0:
+			var nameLength = _samples[n].length()
+			s = _samples[n].substr(_rnd.randi_range(0, _samples[n].length() - _order), _order)
+			while(s.length() < nameLength):
+				var token = s.substr(s.length() - _order, _order)
+				var c = GetLetter(token)
+				if(c != '?'):
+					s += GetLetter(token)
 				else:
-					tokens[t] = tokens[t].substr(0, 1) + tokens[t].substr(1, tokens[t].length()).to_lower()
-				if(s!=""):
-					s += " "
-				s += tokens[t]		
-		else:
-			s = s.substr(0, 1) + s.substr(1, s.length()).to_lower()
-		
-		if(_used.has(s) || s.length() < _minLength):
-			check = true
-		else:
-			check = false
+					break
+			
+			if(s.contains(" ")):
+				var tokens = s.split(' ')
+				s = ""
+				for t in range(0, tokens.size(), 1):
+					if(tokens[t] == ""):
+						continue
+					if(tokens[t].length() == 1):
+						tokens[t] = tokens[t].to_upper();
+					else:
+						tokens[t] = tokens[t].substr(0, 1) + tokens[t].substr(1, tokens[t].length()).to_lower()
+					if(s!=""):
+						s += " "
+					s += tokens[t]		
+			else:
+				s = s.substr(0, 1) + s.substr(1, s.length()).to_lower()
+			
+			if(_used.has(s) || s.length() < _minLength):
+				check = true
+			else:
+				check = false
 			
 	_used.push_back(s)
 	return s
